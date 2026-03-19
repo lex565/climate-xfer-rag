@@ -190,7 +190,7 @@ logo_html = (
     if logo_b64 else '<span style="font-size:2rem">🎓</span>'
 )
 
-<!-- ── corner badge ── -->
+st.markdown(f"""
 <div style="position:fixed;top:56px;right:16px;z-index:9998;
   background:linear-gradient(135deg,#1e3a5f,#2563eb);
   color:#e8f4fd;padding:5px 14px;border-radius:20px;
@@ -199,7 +199,6 @@ logo_html = (
   ASSIGNMENT 3
 </div>
 
-<!-- ── logo above title ── -->
 <div style="text-align:center;margin-bottom:.6rem;">
   {logo_html}
 </div>
