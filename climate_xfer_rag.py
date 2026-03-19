@@ -356,8 +356,10 @@ def _generate_claude(question: str, context_passages: list[str], key: str) -> st
 
 
 # ── load / embed on startup ────────────────────────────────────────────────────
-with st.spinner("Loading PDF and building embeddings …"):
+with st.spinner("⏳ Starting up — loading AI model and PDF (first load takes ~30 sec on cloud) …"):
     raw_text = _extract_pdf_text(PDF_PATH)
+    # Pre-load the model now so the Q&A tab is instant
+    _load_sentence_transformer()
 
 pdf_ok = not raw_text.startswith("[PDF")
 
