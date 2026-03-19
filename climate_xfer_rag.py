@@ -10,6 +10,7 @@ import base64
 import textwrap
 import math
 import time
+import html as _html
 
 import numpy as np
 import streamlit as st
@@ -243,9 +244,10 @@ with st.sidebar:
 
     st.divider()
     st.markdown('<div style="font-family:Orbitron,sans-serif;font-size:.7rem;color:#58a6ff;letter-spacing:.2em;margin-bottom:.6rem">🎬 DEMO VIDEO</div>', unsafe_allow_html=True)
-    video_url = st.text_input("YouTube URL",
-                              value="https://www.youtube.com/watch?v=T-D1OfcDW1M",
-                              help="Paste any YouTube URL to embed in Tab 1")
+    video_url = st.text_input("YouTube / NotebookLM URL",
+                              value="",
+                              placeholder="Paste your NotebookLM or YouTube URL here",
+                              help="Paste the URL of your NotebookLM audio overview or any YouTube video to embed in Tab 1")
 
     st.divider()
     with st.expander("🎓 Teacher & Reviewer Guide", expanded=False):
@@ -384,6 +386,23 @@ with tab1:
     </p>
     """, unsafe_allow_html=True)
 
+    # Knowledge source card
+    st.markdown("""
+    <div style="background:linear-gradient(135deg,#0d1f3c,#07111f);border:1px solid #1e3a5f;border-radius:12px;padding:16px 20px;margin-bottom:1.4rem">
+      <div style="font-family:Orbitron,sans-serif;font-size:.62rem;color:#58a6ff;letter-spacing:.18em;margin-bottom:.6rem">📄 KNOWLEDGE SOURCE — CLIMATE-XFER TECHNICAL REPORT</div>
+      <div style="font-family:'EB Garamond',serif;font-size:.92rem;color:#c9d1d9;line-height:1.6">
+        <em>CLIMATE-XFER: Solving Domain Shift in Climate Prediction Using Physics-Informed Transfer Learning</em><br>
+        <span style="color:#8b949e;font-size:.85rem">
+          Tonderai Bangure &nbsp;·&nbsp; Farai Shoniwa &nbsp;·&nbsp; Muzi Mahlangu<br>
+          University of the Witwatersrand &nbsp;·&nbsp; AI &amp; Large Models, 2025
+        </span>
+      </div>
+      <div style="margin-top:.7rem;font-size:.8rem;color:#58a6ff88;font-family:'Orbitron',sans-serif;letter-spacing:.1em">
+        19 PAGES &nbsp;·&nbsp; 7 443 WORDS &nbsp;·&nbsp; SPEI · SST · GRU · PINN · TRANSFER LEARNING
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     # Pipeline diagram
     steps = [
         ("📄", "INGEST",     "Load CLIMATE-XFER PDF (19 pages, ~8 000 words) via PyPDF2"),
@@ -458,15 +477,16 @@ this trade-off live.
     st.divider()
 
     # Embedded video
-    st.markdown('<div style="font-family:Orbitron,sans-serif;font-size:.72rem;color:#58a6ff;letter-spacing:.2em;margin-bottom:.8rem">🎬 EXPLAINER VIDEO — RAG CONCEPT</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-family:Orbitron,sans-serif;font-size:.72rem;color:#58a6ff;letter-spacing:.2em;margin-bottom:.8rem">🎬 NOTEBOOKLM AUDIO OVERVIEW — RAG EXPLAINER</div>', unsafe_allow_html=True)
 
     if video_url.strip():
-        # Convert watch URL to embed URL
+        url = video_url.strip()
+        # YouTube embed
         vid_id = ""
-        if "v=" in video_url:
-            vid_id = video_url.split("v=")[-1].split("&")[0]
-        elif "youtu.be/" in video_url:
-            vid_id = video_url.split("youtu.be/")[-1].split("?")[0]
+        if "youtube.com/watch" in url and "v=" in url:
+            vid_id = url.split("v=")[-1].split("&")[0]
+        elif "youtu.be/" in url:
+            vid_id = url.split("youtu.be/")[-1].split("?")[0]
 
         if vid_id:
             st.markdown(f"""
@@ -481,9 +501,24 @@ this trade-off live.
             </div>
             """, unsafe_allow_html=True)
         else:
-            st.info("Paste a valid YouTube URL in the sidebar to embed a video.")
+            # Non-YouTube URL (e.g. NotebookLM share link) — open in new tab
+            st.markdown(f"""
+            <div style="background:linear-gradient(135deg,#0d1f3c,#07111f);border:1px solid #1e3a5f;border-radius:12px;padding:24px;text-align:center;">
+              <div style="font-size:2.5rem;margin-bottom:.6rem">🎙️</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:#58a6ff;letter-spacing:.18em;margin-bottom:.8rem">NOTEBOOKLM AUDIO OVERVIEW</div>
+              <a href="{_html.escape(url)}" target="_blank"
+                 style="display:inline-block;padding:10px 28px;background:linear-gradient(90deg,#1e3a5f,#2563eb);color:#e8f4fd;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:.65rem;letter-spacing:.15em;text-decoration:none;">
+                ▶ PLAY AUDIO OVERVIEW
+              </a>
+              <div style="margin-top:.8rem;font-size:.75rem;color:#8b949e">Opens in a new tab · Generated with Google NotebookLM</div>
+            </div>
+            """, unsafe_allow_html=True)
     else:
-        st.info("Paste a YouTube URL in the sidebar to embed an explainer video.")
+        st.markdown("""
+        <div style="background:#07111f;border:1px dashed #1e3a5f;border-radius:12px;padding:28px;text-align:center;color:#8b949e;font-size:.88rem">
+          🎙️ &nbsp; Paste your <strong style="color:#58a6ff">NotebookLM share URL</strong> or YouTube link in the sidebar to embed the audio/video overview here.
+        </div>
+        """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -535,7 +570,7 @@ with tab2:
 
             for rank, (idx, score, passage) in enumerate(results, 1):
                 pct = int(score * 100)
-                preview = passage[:350] + ("…" if len(passage) > 350 else "")
+                preview = _html.escape(passage[:350] + ("…" if len(passage) > 350 else ""))
                 st.markdown(f"""
                 <div class="chunk-box">
                   <span class="chunk-id">chunk #{idx} · {pct}%</span>
@@ -552,11 +587,11 @@ with tab2:
             if api_key.strip():
                 with st.spinner("Generating answer with Claude …"):
                     answer = _generate_claude(query, context_passages, api_key.strip())
-                st.markdown(f'<div class="answer-box">{answer}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="answer-box">{_html.escape(answer)}</div>', unsafe_allow_html=True)
                 st.caption("Answer generated by Claude · grounded in retrieved passages only")
             else:
                 # Fallback: return the top passage
-                best_passage = results[0][2] if results else "No relevant passage found."
+                best_passage = _html.escape(results[0][2] if results else "No relevant passage found.")
                 st.markdown(f'<div class="answer-box"><em style="color:#58a6ff88;font-size:.78rem">No API key — showing top retrieved passage:</em><br><br>{best_passage}</div>', unsafe_allow_html=True)
                 st.caption("Add an Anthropic API key in the sidebar to enable AI-generated answers.")
 
@@ -578,7 +613,7 @@ with tab3:
         cols2 = st.columns(2)
         for i in range(show_n):
             with cols2[i % 2]:
-                preview = chunks[i][:280] + ("…" if len(chunks[i]) > 280 else "")
+                preview = _html.escape(chunks[i][:280] + ("…" if len(chunks[i]) > 280 else ""))
                 st.markdown(f"""
                 <div class="chunk-box">
                   <span class="chunk-id">chunk #{i}</span>
