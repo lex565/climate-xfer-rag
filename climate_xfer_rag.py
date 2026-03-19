@@ -61,17 +61,6 @@ st.html("""
     text-align:center; letter-spacing:.25em; margin-bottom:1.4rem;
   }
 
-  /* ── scan-line overlay ── */
-  @keyframes scanLine {
-    0%   { transform: translateY(-100%); }
-    100% { transform: translateY(100vh); }
-  }
-  .scanline {
-    pointer-events:none; position:fixed; top:0; left:0;
-    width:100%; height:3px;
-    background: linear-gradient(transparent, rgba(88,166,255,.18), transparent);
-    animation: scanLine 6s linear infinite; z-index:9999;
-  }
 
   /* ── institution bar ── */
   .inst-bar {
@@ -172,7 +161,6 @@ st.html("""
   .tutorial-step { margin-bottom:.7rem; font-size:.9rem; line-height:1.6; }
   .tutorial-step b { color:#58a6ff; }
 </style>
-<div class="scanline"></div>
 """)
 
 # ── logo ──────────────────────────────────────────────────────────────────────
