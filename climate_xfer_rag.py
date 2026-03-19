@@ -36,7 +36,10 @@ def _load_sentence_transformer():
     return SentenceTransformer("all-MiniLM-L6-v2")
 
 # ── global CSS ────────────────────────────────────────────────────────────────
-st.markdown("""
+# Use st.html() — NOT st.markdown() — for large style blocks.
+# st.markdown passes content through a markdown processor which sometimes
+# renders <style> tag contents as visible text. st.html() bypasses this.
+st.html("""
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Orbitron:wght@400;700&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
 <style>
   /* ── base ── */
@@ -170,7 +173,7 @@ st.markdown("""
   .tutorial-step b { color:#58a6ff; }
 </style>
 <div class="scanline"></div>
-""", unsafe_allow_html=True)
+""")
 
 # ── logo ──────────────────────────────────────────────────────────────────────
 def _get_logo_b64() -> str:
