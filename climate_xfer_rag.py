@@ -197,23 +197,23 @@ st.markdown(f"""
 <div class="inst-bar">
   {logo_html}
   <div class="inst-text">
-    <div class="inst-uni">University of the Witwatersrand</div>
-    <div class="inst-dept">AI &amp; LARGE MODELS · MASTERS PROGRAMME 2025-2027</div>
+    <div class="inst-uni">Beihang University</div>
+    <div class="inst-dept">MSc AI &amp; LARGE MODELS · SEMESTER 1/2 2025-2027</div>
   </div>
 </div>
 
 <div class="author-row">
   <div class="author-card">
     <div class="author-avatar" style="background:linear-gradient(135deg,#1a3a6b,#2563eb)">T</div>
-    <div><div class="author-name">Tonderai Bangure</div><div class="author-id">2816042</div></div>
+    <div><div class="author-name">Tanaka Alex Mbendana</div><div class="author-id">LS2525233</div></div>
   </div>
   <div class="author-card">
     <div class="author-avatar" style="background:linear-gradient(135deg,#1a4a3a,#059669)">F</div>
-    <div><div class="author-name">Farai Shoniwa</div><div class="author-id">2816089</div></div>
+    <div><div class="author-name">Fitrotur Rofiqoh</div><div class="author-id">LS2525220</div></div>
   </div>
   <div class="author-card">
     <div class="author-avatar" style="background:linear-gradient(135deg,#4a1a3a,#9333ea)">M</div>
-    <div><div class="author-name">Muzi Mahlangu</div><div class="author-id">2816105</div></div>
+    <div><div class="author-name">Munashe Innocent Mafuta</div><div class="author-id">LS2557204</div></div>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -396,8 +396,8 @@ with tab1:
       <div style="font-family:'EB Garamond',serif;font-size:.92rem;color:#c9d1d9;line-height:1.6">
         <em>CLIMATE-XFER: Solving Domain Shift in Climate Prediction Using Physics-Informed Transfer Learning</em><br>
         <span style="color:#8b949e;font-size:.85rem">
-          Tonderai Bangure &nbsp;·&nbsp; Farai Shoniwa &nbsp;·&nbsp; Muzi Mahlangu<br>
-          University of the Witwatersrand &nbsp;·&nbsp; AI &amp; Large Models, 2025
+          Tanaka Alex Mbendana &nbsp;·&nbsp; Fitrotur Rofiqoh &nbsp;·&nbsp; Munashe Innocent Mafuta<br>
+          Beihang University &nbsp;·&nbsp; MSc AI &amp; Large Models, 2025-2027
         </span>
       </div>
       <div style="margin-top:.7rem;font-size:.8rem;color:#58a6ff88;font-family:'Orbitron',sans-serif;letter-spacing:.1em">
