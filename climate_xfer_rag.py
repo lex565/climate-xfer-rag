@@ -40,10 +40,10 @@ def _load_sentence_transformer():
 # st.markdown passes content through a markdown processor which sometimes
 # renders <style> tag contents as visible text. st.html() bypasses this.
 st.html("""
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Orbitron:wght@400;700&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  /* ── base ── */
-  html, body, [class*="css"] { font-family: 'EB Garamond', Georgia, serif; }
+  /* ── base — Palatino is a system font, no import needed ── */
+  html, body, [class*="css"] { font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif; }
 
   /* ── title glow ── */
   @keyframes titleGlow {
@@ -102,7 +102,7 @@ st.html("""
     font-family:'Cinzel',serif; font-weight:700; font-size:.85rem; color:#fff;
     animation: avatarPulse 2.5s infinite;
   }
-  .author-name { font-family:'EB Garamond',serif; font-size:.9rem; color:#c9d1d9; }
+  .author-name { font-family:'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif; font-size:.9rem; color:#c9d1d9; }
   .author-id   { font-family:'Orbitron',sans-serif; font-size:.58rem; color:#58a6ff; letter-spacing:.1em; }
 
   /* ── pipeline step cards ── */
@@ -136,7 +136,7 @@ st.html("""
   .chunk-box {
     background:#07111f; border:1px solid #1e3a5f; border-radius:8px;
     padding:12px; font-size:.82rem; color:#8b949e;
-    font-family:'EB Garamond',serif; line-height:1.6;
+    font-family:'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif; line-height:1.6;
     margin-bottom:8px; position:relative;
   }
   .chunk-id {
@@ -149,7 +149,7 @@ st.html("""
     background:linear-gradient(135deg,#07111f,#0a1628);
     border:1px solid #58a6ff66; border-radius:12px;
     padding:20px; font-size:.95rem; color:#c9d1d9;
-    line-height:1.75; font-family:'EB Garamond',serif;
+    line-height:1.75; font-family:'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
   }
 
   /* ── tab guide ── */
@@ -193,6 +193,12 @@ logo_html = (
 st.markdown(f"""
 <div class="rag-title">CLIMATE-XFER RAG DEMO</div>
 <div class="rag-subtitle">Retrieval-Augmented Generation · Assignment 3 · AI &amp; Large Models</div>
+<div style="text-align:center;margin-bottom:1rem;font-family:'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;">
+  <span style="color:#58a6ff;font-size:1rem;font-weight:bold;">XFER</span>
+  <span style="color:#8b949e;font-size:.95rem;"> — </span>
+  <span style="color:#c9d1d9;font-size:.95rem;font-style:italic;">Cross-domain Transfer Learning:</span>
+  <span style="color:#8b949e;font-size:.9rem;"> a model trained on one climate region is transferred to another without full retraining, preserving learned temporal patterns across geographic boundaries.</span>
+</div>
 
 <div class="inst-bar">
   {logo_html}
@@ -378,9 +384,7 @@ tab1, tab2, tab3 = st.tabs([
 # ═══════════════════════════════════════════════════════════════
 with tab1:
     st.markdown("""
-    <div style="font-family:Orbitron,sans-serif;font-size:.75rem;color:#58a6ff;letter-spacing:.2em;margin-bottom:1rem">
-    WHAT IS RETRIEVAL-AUGMENTED GENERATION?
-    </div>
+    <div style="font-family:Cinzel,serif;font-size:1.3rem;color:#e8f4fd;margin-bottom:.5rem;font-weight:700">What is Retrieval-Augmented Generation?</div>
     <p style="font-size:.95rem;color:#c9d1d9;line-height:1.75;margin-bottom:1.4rem">
     RAG grounds a large language model in <em>specific documents</em> rather than relying solely on
     parametric knowledge. We split the CLIMATE-XFER technical report into overlapping chunks,
@@ -394,7 +398,7 @@ with tab1:
     st.markdown("""
     <div style="background:linear-gradient(135deg,#0d1f3c,#07111f);border:1px solid #1e3a5f;border-radius:12px;padding:16px 20px;margin-bottom:1.4rem">
       <div style="font-family:Orbitron,sans-serif;font-size:.62rem;color:#58a6ff;letter-spacing:.18em;margin-bottom:.6rem">📄 KNOWLEDGE SOURCE — CLIMATE-XFER TECHNICAL REPORT</div>
-      <div style="font-family:'EB Garamond',serif;font-size:.92rem;color:#c9d1d9;line-height:1.6">
+      <div style="font-family:'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;font-size:.92rem;color:#c9d1d9;line-height:1.6">
         <em>CLIMATE-XFER: Solving Domain Shift in Climate Prediction Using Physics-Informed Transfer Learning</em><br>
         <span style="color:#8b949e;font-size:.85rem">
           Tanaka Alex Mbendana &nbsp;·&nbsp; Fitrotur Rofiqoh &nbsp;·&nbsp; Munashe Innocent Mafuta<br>
@@ -529,12 +533,12 @@ this trade-off live.
 # TAB 2 — Live Q&A
 # ═══════════════════════════════════════════════════════════════
 with tab2:
-    st.markdown('<div style="font-family:Orbitron,sans-serif;font-size:.75rem;color:#58a6ff;letter-spacing:.2em;margin-bottom:1rem">ASK THE CLIMATE-XFER KNOWLEDGE BASE</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-family:Cinzel,serif;font-size:1.3rem;color:#e8f4fd;font-weight:700;margin-bottom:.5rem">Ask the CLIMATE-XFER Knowledge Base</div>', unsafe_allow_html=True)
 
     if not pdf_ok:
         st.error(f"Could not load PDF: {raw_text}")
     else:
-        # Example questions
+        # Example questions — clicking one sets the text input key directly and reruns
         with st.expander("💡 Example questions to try"):
             examples = [
                 "What is the main objective of the CLIMATE-XFER project?",
@@ -548,11 +552,12 @@ with tab2:
             ]
             for ex in examples:
                 if st.button(ex, key=f"ex_{ex[:20]}"):
-                    st.session_state["rag_query"] = ex
+                    st.session_state["query_input"] = ex   # must match text_input key
+                    st.session_state["auto_search"] = True
+                    st.rerun()
 
         query = st.text_input(
             "Your question",
-            value=st.session_state.get("rag_query", ""),
             placeholder="e.g. What RMSE did the GRU model achieve on SADC data?",
             key="query_input",
         )
@@ -561,42 +566,79 @@ with tab2:
         with ask_col:
             run_query = st.button("🔍 Search & Answer", type="primary", use_container_width=True)
 
-        if run_query and query.strip():
-            st.session_state["rag_query"] = query.strip()
+        # Trigger search on button click OR after example selection
+        do_search = run_query or st.session_state.pop("auto_search", False)
 
+        if do_search and query.strip():
             with st.spinner("Retrieving relevant passages …"):
-                model    = _load_sentence_transformer()
-                results  = _retrieve(query, chunks, embeddings, model, top_k)
+                model   = _load_sentence_transformer()
+                results = _retrieve(query, chunks, embeddings, model, top_k)
+                context_passages = [r[2] for r in results]
 
-            # Show retrieved chunks
+                if api_key.strip():
+                    answer_text = None   # generated below with spinner
+                else:
+                    answer_text = results[0][2] if results else "No relevant passage found."
+
+            # Store in session state so results survive reruns
+            st.session_state["qa_results"]  = results
+            st.session_state["qa_query"]    = query
+            st.session_state["qa_passages"] = context_passages
+            st.session_state["qa_use_api"]  = bool(api_key.strip())
+            st.session_state["qa_api_key"]  = api_key.strip()
+            st.session_state["qa_answer"]   = answer_text   # None = needs generation
+
+        # Display stored results
+        if st.session_state.get("qa_results"):
+            results          = st.session_state["qa_results"]
+            context_passages = st.session_state["qa_passages"]
+            stored_query     = st.session_state["qa_query"]
+
             st.markdown("---")
-            st.markdown(f'<div style="font-family:Orbitron,sans-serif;font-size:.65rem;color:#58a6ff;letter-spacing:.18em;margin-bottom:.6rem">TOP-{top_k} RETRIEVED CHUNKS</div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<p style="font-family:Cinzel,serif;font-size:1rem;color:#e8f4fd;margin-bottom:.8rem">'
+                f'Results for: <em style="color:#58a6ff">{_html.escape(stored_query)}</em></p>',
+                unsafe_allow_html=True)
+
+            st.markdown(
+                f'<div style="font-family:Orbitron,sans-serif;font-size:.62rem;color:#58a6ff;'
+                f'letter-spacing:.18em;margin-bottom:.6rem">TOP-{top_k} RETRIEVED PASSAGES</div>',
+                unsafe_allow_html=True)
 
             for rank, (idx, score, passage) in enumerate(results, 1):
-                pct = int(score * 100)
+                pct     = int(score * 100)
                 preview = _html.escape(passage[:350] + ("…" if len(passage) > 350 else ""))
                 st.markdown(f"""
                 <div class="chunk-box">
-                  <span class="chunk-id">chunk #{idx} · {pct}%</span>
+                  <span class="chunk-id">passage {rank} &nbsp;·&nbsp; {pct}% match</span>
                   <div style="margin-top:18px">{preview}</div>
                 </div>
                 """, unsafe_allow_html=True)
 
-            # Generate answer
             st.markdown("---")
-            st.markdown('<div style="font-family:Orbitron,sans-serif;font-size:.65rem;color:#58a6ff;letter-spacing:.18em;margin-bottom:.6rem">GENERATED ANSWER</div>', unsafe_allow_html=True)
+            st.markdown(
+                '<div style="font-family:Cinzel,serif;font-size:1rem;color:#e8f4fd;margin-bottom:.6rem">Answer</div>',
+                unsafe_allow_html=True)
 
-            context_passages = [r[2] for r in results]
+            if st.session_state["qa_use_api"]:
+                if st.session_state["qa_answer"] is None:
+                    # Generate now (only runs once per search)
+                    with st.spinner("Generating answer with Claude …"):
+                        answer = _generate_claude(
+                            stored_query, context_passages, st.session_state["qa_api_key"])
+                    st.session_state["qa_answer"] = answer
 
-            if api_key.strip():
-                with st.spinner("Generating answer with Claude …"):
-                    answer = _generate_claude(query, context_passages, api_key.strip())
-                st.markdown(f'<div class="answer-box">{_html.escape(answer)}</div>', unsafe_allow_html=True)
-                st.caption("Answer generated by Claude · grounded in retrieved passages only")
+                st.markdown(
+                    f'<div class="answer-box">{_html.escape(st.session_state["qa_answer"])}</div>',
+                    unsafe_allow_html=True)
+                st.caption("Grounded answer generated by Claude · based on retrieved passages only")
             else:
-                # Fallback: return the top passage
-                best_passage = _html.escape(results[0][2] if results else "No relevant passage found.")
-                st.markdown(f'<div class="answer-box"><em style="color:#58a6ff88;font-size:.78rem">No API key — showing top retrieved passage:</em><br><br>{best_passage}</div>', unsafe_allow_html=True)
+                best = _html.escape(st.session_state["qa_answer"] or "No passage found.")
+                st.markdown(
+                    f'<div class="answer-box">'
+                    f'<em style="color:#58a6ff88;font-size:.8rem">No API key — showing top retrieved passage:</em>'
+                    f'<br><br>{best}</div>',
+                    unsafe_allow_html=True)
                 st.caption("Add an Anthropic API key in the sidebar to enable AI-generated answers.")
 
 
@@ -604,7 +646,7 @@ with tab2:
 # TAB 3 — Pipeline internals
 # ═══════════════════════════════════════════════════════════════
 with tab3:
-    st.markdown('<div style="font-family:Orbitron,sans-serif;font-size:.75rem;color:#58a6ff;letter-spacing:.2em;margin-bottom:1rem">PIPELINE INTERNALS — UNDER THE HOOD</div>', unsafe_allow_html=True)
+    st.markdown('<div style="font-family:Cinzel,serif;font-size:1.3rem;color:#e8f4fd;font-weight:700;margin-bottom:.5rem">Pipeline Internals — Under the Hood</div>', unsafe_allow_html=True)
 
     if not pdf_ok:
         st.error("PDF not loaded.")
