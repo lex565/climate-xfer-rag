@@ -190,7 +190,20 @@ logo_html = (
     if logo_b64 else '<span style="font-size:2rem">🎓</span>'
 )
 
-st.markdown(f"""
+<!-- ── corner badge ── -->
+<div style="position:fixed;top:56px;right:16px;z-index:9998;
+  background:linear-gradient(135deg,#1e3a5f,#2563eb);
+  color:#e8f4fd;padding:5px 14px;border-radius:20px;
+  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.18em;
+  box-shadow:0 0 12px #2563eb55;border:1px solid #58a6ff44;">
+  ASSIGNMENT 3
+</div>
+
+<!-- ── logo above title ── -->
+<div style="text-align:center;margin-bottom:.6rem;">
+  {logo_html}
+</div>
+
 <div class="rag-title">CLIMATE-XFER RAG DEMO</div>
 <div class="rag-subtitle">Retrieval-Augmented Generation · Assignment 3 · AI &amp; Large Models</div>
 <div style="text-align:center;margin-bottom:1rem;font-family:'Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;">
@@ -201,7 +214,6 @@ st.markdown(f"""
 </div>
 
 <div class="inst-bar">
-  {logo_html}
   <div class="inst-text">
     <div class="inst-uni">Beihang University</div>
     <div class="inst-dept">MSc AI &amp; LARGE MODELS · SEMESTER 1/2 2025-2027</div>
