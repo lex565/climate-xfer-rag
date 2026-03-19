@@ -247,10 +247,11 @@ with st.sidebar:
 
     st.divider()
     st.markdown('<div style="font-family:Orbitron,sans-serif;font-size:.7rem;color:#58a6ff;letter-spacing:.2em;margin-bottom:.6rem">🎬 DEMO VIDEO</div>', unsafe_allow_html=True)
-    video_url = st.text_input("YouTube / NotebookLM URL",
+    st.caption("📁 videoplayback.mp4 loaded from app folder")
+    video_url = st.text_input("Fallback URL (YouTube / other)",
                               value="",
-                              placeholder="Paste your NotebookLM or YouTube URL here",
-                              help="Paste the URL of your NotebookLM audio overview or any YouTube video to embed in Tab 1")
+                              placeholder="Used only if videoplayback.mp4 is missing",
+                              help="Only used when videoplayback.mp4 is not present in the app folder")
 
     st.divider()
     with st.expander("🎓 Teacher & Reviewer Guide", expanded=False):
@@ -479,12 +480,15 @@ this trade-off live.
 
     st.divider()
 
-    # Embedded video
-    st.markdown('<div style="font-family:Orbitron,sans-serif;font-size:.72rem;color:#58a6ff;letter-spacing:.2em;margin-bottom:.8rem">🎬 NOTEBOOKLM AUDIO OVERVIEW — RAG EXPLAINER</div>', unsafe_allow_html=True)
+    # Embedded video — prefer local MP4, fall back to URL
+    st.markdown('<div style="font-family:Orbitron,sans-serif;font-size:.72rem;color:#58a6ff;letter-spacing:.2em;margin-bottom:.8rem">🎬 NOTEBOOKLM VIDEO OVERVIEW — RAG EXPLAINER</div>', unsafe_allow_html=True)
 
-    if video_url.strip():
+    _local_video = _path("videoplayback.mp4")
+    if os.path.exists(_local_video):
+        st.video(_local_video)
+        st.caption("Video overview generated with Google NotebookLM · CLIMATE-XFER RAG Demo")
+    elif video_url.strip():
         url = video_url.strip()
-        # YouTube embed
         vid_id = ""
         if "youtube.com/watch" in url and "v=" in url:
             vid_id = url.split("v=")[-1].split("&")[0]
@@ -504,22 +508,19 @@ this trade-off live.
             </div>
             """, unsafe_allow_html=True)
         else:
-            # Non-YouTube URL (e.g. NotebookLM share link) — open in new tab
             st.markdown(f"""
             <div style="background:linear-gradient(135deg,#0d1f3c,#07111f);border:1px solid #1e3a5f;border-radius:12px;padding:24px;text-align:center;">
-              <div style="font-size:2.5rem;margin-bottom:.6rem">🎙️</div>
-              <div style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:#58a6ff;letter-spacing:.18em;margin-bottom:.8rem">NOTEBOOKLM AUDIO OVERVIEW</div>
+              <div style="font-size:2.5rem;margin-bottom:.6rem">🎬</div>
               <a href="{_html.escape(url)}" target="_blank"
                  style="display:inline-block;padding:10px 28px;background:linear-gradient(90deg,#1e3a5f,#2563eb);color:#e8f4fd;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:.65rem;letter-spacing:.15em;text-decoration:none;">
-                ▶ PLAY AUDIO OVERVIEW
+                ▶ OPEN VIDEO
               </a>
-              <div style="margin-top:.8rem;font-size:.75rem;color:#8b949e">Opens in a new tab · Generated with Google NotebookLM</div>
             </div>
             """, unsafe_allow_html=True)
     else:
         st.markdown("""
         <div style="background:#07111f;border:1px dashed #1e3a5f;border-radius:12px;padding:28px;text-align:center;color:#8b949e;font-size:.88rem">
-          🎙️ &nbsp; Paste your <strong style="color:#58a6ff">NotebookLM share URL</strong> or YouTube link in the sidebar to embed the audio/video overview here.
+          🎬 &nbsp; No video found. Place <strong style="color:#58a6ff">videoplayback.mp4</strong> in the app folder or paste a URL in the sidebar.
         </div>
         """, unsafe_allow_html=True)
 
