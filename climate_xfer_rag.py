@@ -461,7 +461,7 @@ See raw chunks, 384-dim embedding heatmap, and cosine similarity scores.</div>
 """)
 
 # ── RAG backend ───────────────────────────────────────────────────────────────
-PDF_PATH = r"D:\Masters Program 2025-2027\Semester 1_2\Artificial Intelligence and Large  Models\Final  Project\CLIMATE_XFER\reports\CLIMATE_MODEL.pdf"
+PDF_PATH = _path("CLIMATE_MODEL.pdf")
 
 @st.cache_data(show_spinner=False)
 def _extract_pdf_bytes(data: bytes, _name: str) -> str:
