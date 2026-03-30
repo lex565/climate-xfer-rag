@@ -504,6 +504,16 @@ def _retrieve(query: str, chunks: list[str], embeddings: np.ndarray,
     return [(i, s, chunks[i]) for i, s in scores[:k]]
 
 
+# Shown when a document is uploaded but no API key is available
+_GENERIC_EXAMPLES = [
+    "What is the main topic of this document?",
+    "What are the key findings or conclusions?",
+    "What methodology or approach was used?",
+    "What datasets or data sources were referenced?",
+    "What limitations are mentioned?",
+    "What future work or recommendations are suggested?",
+]
+
 _DEFAULT_EXAMPLES = [
     "What is the main objective of CLIMATE-XFER and which regions does it cover?",
     "What RMSE and Pearson r did the GRU model achieve on the SADC validation set?",
@@ -894,14 +904,16 @@ with tab2:
     if not pdf_ok:
         st.error(f"Could not load PDF: {raw_text}")
     else:
-        # Build example questions — generated from uploaded doc, else default
-        if doc_source == "uploaded" and api_key.strip():
-            with st.spinner("🛰️ Reading your document and generating questions …"):
-                examples = _generate_example_questions(raw_text[:3000], api_key.strip())
-            if not examples:
-                st.warning("Could not auto-generate questions — showing defaults.", icon="⚠️")
-                examples = _DEFAULT_EXAMPLES
-            _expander_label = f"💡 Questions generated for: {doc_name}"
+        # Build example questions
+        if doc_source == "uploaded":
+            if api_key.strip():
+                with st.spinner("🛰️ Generating questions for your document …"):
+                    examples = _generate_example_questions(raw_text[:3000], api_key.strip())
+                if not examples:
+                    examples = _GENERIC_EXAMPLES
+            else:
+                examples = _GENERIC_EXAMPLES
+            _expander_label = f"💡 Suggested questions for: {doc_name}"
         else:
             examples = _DEFAULT_EXAMPLES
             _expander_label = "💡 Sample queries to try"
